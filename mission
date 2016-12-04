@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Mission xmlns="http://ProjectMalmo.microsoft.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <About>
+        <Summary>Identify location in room</Summary>
+    </About>
+
+    <ServerSection>
+        <ServerInitialConditions>
+            <Time>
+                <StartTime>12000</StartTime>
+                <AllowPassageOfTime>false</AllowPassageOfTime>
+            </Time>
+            <Weather>clear</Weather>
+        </ServerInitialConditions>
+        <ServerHandlers>
+            <FileWorldGenerator src="/Users/drbozdog/DeepLearningMachine/RLLayoutX/Enviroments/Room #1"/>
+            <ServerQuitFromTimeUp timeLimitMs="1200000"/>
+            <ServerQuitWhenAnyAgentFinishes/>
+        </ServerHandlers>
+    </ServerSection>
+
+    <AgentSection mode="Creative">
+        <Name>RLOneX</Name>
+        <AgentStart>
+            <Placement x="0" y="4" z="0" pitch="0" yaw="180"/>
+        </AgentStart>
+        <AgentHandlers>
+            <AbsoluteMovementCommands/>
+            <DiscreteMovementCommands/>
+            <VideoProducer want_depth="false">
+                <Width>320</Width>
+                <Height>240</Height>
+            </VideoProducer>
+            <ObservationFromGrid>
+                <Grid name="agent_surround">
+                    <min x="-100" y="0" z="-100"/>
+                    <max x="100" y="0" z="100"/>
+                </Grid>
+            </ObservationFromGrid>
+        </AgentHandlers>
+    </AgentSection>
+
+</Mission>
