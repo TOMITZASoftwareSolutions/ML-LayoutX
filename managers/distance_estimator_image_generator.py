@@ -82,7 +82,7 @@ class DistanceEstimatorImageGeneratorManager():
         distance = coordinate['distance']
         train = 'train' if coordinate['train'] else 'validate'
 
-        folder = 'dataset/{0}/{1}'.format(train, distance)
+        folder = 'data/{0}/{1}'.format(train, distance)
 
         if not os.path.exists(folder):
             os.makedirs(folder)

@@ -29,8 +29,8 @@
             <AbsoluteMovementCommands/>
             <DiscreteMovementCommands/>
             <VideoProducer want_depth="false">
-                <Width>320</Width>
-                <Height>240</Height>
+                <Width>224</Width>
+                <Height>224</Height>
             </VideoProducer>
             <ObservationFromGrid>
                 <Grid name="agent_surround">

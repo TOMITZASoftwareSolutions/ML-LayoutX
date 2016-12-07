@@ -111,7 +111,9 @@ while world_state.is_mission_running:
             world_state = agent_host.getWorldState()
 
         pixels = world_state.video_frames[0].pixels
-        frame = np.array(pixels).reshape((240, 320, 3))
+        frame_height = int(mission_info['Mission']['AgentSection']['AgentHandlers']['VideoProducer']['Height'])
+        frame_width = int(mission_info['Mission']['AgentSection']['AgentHandlers']['VideoProducer']['Width'])
+        frame = np.array(pixels).reshape((frame_height, frame_width, 3))
 
         distance_image_generator.save(coordinate, frame)
 
