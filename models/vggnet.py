@@ -46,7 +46,7 @@ def VGG_16(weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(1, activation='linear'))
+    model.add(Dense(1000, activation='softmax'))
 
     if weights_path:
         model.load_weights(weights_path)

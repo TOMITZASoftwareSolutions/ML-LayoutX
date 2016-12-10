@@ -34,7 +34,8 @@ if __name__ == "__main__":
 
     weights_path = '/deeplearningresources/vgg16_weights.h5'
     model = vggnet.VGG_16(weights_path=None)
-    model.layers[len(model.layers) - 1] = Dense(1, activation='linear')
+    model.layers.pop()
+    model.add(Dense(1, activation='linear'))
 
     sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(optimizer=sgd, loss='mse')
