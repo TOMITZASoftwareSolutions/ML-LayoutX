@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/RLLayoutX.iml" filepath="$PROJECT_DIR$/.idea/RLLayoutX.iml" />
+      <module fileurl="file://$USER_HOME$/DeepLearningWorkspace/ML-LayoutX/.idea/ML-LayoutX.iml" filepath="$USER_HOME$/DeepLearningWorkspace/ML-LayoutX/.idea/ML-LayoutX.iml" />
     </modules>
   </component>
 </project>
