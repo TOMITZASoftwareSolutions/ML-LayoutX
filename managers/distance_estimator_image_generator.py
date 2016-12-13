@@ -4,6 +4,7 @@ import itertools
 import json
 from PIL import Image
 import os
+import random
 
 
 class DistanceEstimatorImageGeneratorManager():
@@ -46,8 +47,10 @@ class DistanceEstimatorImageGeneratorManager():
                 distance = self.calculate_distance(z, x, building_2d)
                 x = x + origin_x + 0.5
                 z = z + origin_z + 0.5
-                coordinate = self.create_coordinate(x, z, train, distance, 0, building)
-                coordinates.append(coordinate)
+
+                # coordinate = self.create_coordinate(x, z, train, distance, 0, building)
+                spiced_coordinates = self.spice_coordinates(x, z, train, distance, 0, building)
+                coordinates += spiced_coordinates
 
         return coordinates
 
@@ -61,16 +64,26 @@ class DistanceEstimatorImageGeneratorManager():
                 distance += 1
         return distance
 
-    def spice_coordinates(self, x, z, train, distance, yaw):
-        # TODO add random to x,z,yaw,pitch
-        return self.create_coordinate(x, z, train, distance, yaw)
+    def spice_coordinates(self, x, z, train, distance, yaw, building):
+
+        delta_xs = [x + random.uniform(-0.4, 0.4) for i in range(3)]
+        delta_zs = [z + random.uniform(-0.4, 0.4) for i in range(3)]
+        delta_pitchs = [0 + random.uniform(-5, 5) for i in range(3)]
+        delta_yaws = [yaw + random.uniform(-3, 3) for i in range(3)]
+
+        coordinates = [self.create_coordinate(dx, dz, train, distance, dyaw, building, dpitch) for dx, dz, dpitch, dyaw
+                       in itertools.product(delta_xs, delta_zs, delta_pitchs, delta_yaws)]
+
+        coordinates.append(self.create_coordinate(x, z, train, distance, yaw, building))
+
+        return coordinates
 
     def create_coordinate(self, x, z, train, distance, yaw, building, pitch=0):
         coordinate = dict()
         coordinate['x'] = x
         coordinate['z'] = z
         coordinate['y'] = 4
-        coordinate['pitch'] = 0
+        coordinate['pitch'] = pitch
         coordinate['yaw'] = yaw
         coordinate['train'] = train
         coordinate['distance'] = distance
@@ -88,8 +101,8 @@ class DistanceEstimatorImageGeneratorManager():
             os.makedirs(folder)
 
         image_path = '{0}/{1}_{2}_{3}_{4}_{5}_{6}.jpg'.format(folder, coordinate['building'], coordinate['x'],
-                                                         coordinate['y'], coordinate['z'], coordinate['yaw'],
-                                                         coordinate['pitch'])
+                                                              coordinate['y'], coordinate['z'], coordinate['yaw'],
+                                                              coordinate['pitch'])
 
         im.save(image_path)
 
@@ -130,3 +143,17 @@ class DistanceEstimatorImageGeneratorManagerTest(TestCase):
         self.assertEqual(coordinates[2]['train'], False)
         self.assertEqual(coordinates[0]['train'], True)
         self.assertEqual(coordinates[0]['distance'], 0)
+
+    def test_spice_coordinates(self):
+        coordinates = self.image_generator.spice_coordinates(0, 0, False, 0, 0, 'whatever')
+
+        self.assertEqual(len(coordinates), 3 * 3 * 5 * 5 + 1)
+
+        self.assertTrue(-0.5 < coordinates[0]['x'] < 0.5)
+        self.assertTrue(-0.5 < coordinates[1]['z'] < 0.5)
+        self.assertEqual(len(set([coordinate['x'] for coordinate in coordinates])),4)
+        self.assertEqual(len(set([coordinate['z'] for coordinate in coordinates])),4)
+        self.assertEqual(len(set([coordinate['yaw'] for coordinate in coordinates])),6)
+        self.assertEqual(len(set([coordinate['pitch'] for coordinate in coordinates])),6)
+        self.assertTrue(coordinates[0]['yaw'] != 0)
+        self.assertTrue(coordinates[5]['pitch'] != 0)

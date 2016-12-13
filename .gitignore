@@ -135,3 +135,5 @@ ENV/
 # Rope project settings
 .ropeproject
 
+data
+dataslim

@@ -14,8 +14,8 @@
             <Weather>clear</Weather>
         </ServerInitialConditions>
         <ServerHandlers>
-            <FileWorldGenerator src="/Users/drbozdog/DeepLearningMachine/RLLayoutX/Enviroments/Room #1"/>
-            <ServerQuitFromTimeUp timeLimitMs="1200000"/>
+            <FileWorldGenerator src="/Users/drbozdog/DeepLearningWorkspace/ML-LayoutX/Enviroments/Room #1"/>
+            <ServerQuitFromTimeUp timeLimitMs="120000000"/>
             <ServerQuitWhenAnyAgentFinishes/>
         </ServerHandlers>
     </ServerSection>

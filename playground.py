@@ -101,8 +101,12 @@ while world_state.is_mission_running:
         pitch = coordinate['pitch']
         agent_host.sendCommand("tp {0} {1} {2}".format(x, y, z))
         agent_host.sendCommand("setYaw {0}".format(yaw))
+        agent_host.sendCommand("setPitch {0}".format(pitch))
 
-        time.sleep(0.25)
+        if index % 100 == 0:
+            print 'Progress {0}/{1}'.format(index, len(coordinates))
+
+        time.sleep(0.2)
 
         world_state = agent_host.getWorldState()
         while world_state.number_of_video_frames_since_last_state < 1 and world_state.is_mission_running:
