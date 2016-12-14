@@ -15,15 +15,15 @@ if __name__ == "__main__":
 
     train_generator = train_datagen.flow_from_directory(
         'data/train',
-        target_size=(84, 84), classes=['1', '10'],
+        target_size=(84, 84), classes=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
         batch_size=256,
         class_mode='categorical',
     )
 
     validation_generator = test_datagen.flow_from_directory(
         'data/validate',
-        target_size=(84, 84), classes=['1', '10'],
-        batch_size=256,
+        target_size=(84, 84),
+        batch_size=256, classes=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
         class_mode='categorical'
     )
 
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     model = rlc.RLConvNet(input_shape=(3, 84, 84))
     model.layers.pop()
-    model.add(Dense(2, activation='softmax'))
+    model.add(Dense(10, activation='softmax'))
 
     sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
     rmsprop = RMSprop(lr=0.001, decay=1e-6)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     tensorboard_callback = TensorBoard()
     progbar_callback = ProgbarLogger()
 
-    model.fit_generator(train_generator, samples_per_epoch=3000, nb_epoch=100, validation_data=validation_generator,
+    model.fit_generator(train_generator, samples_per_epoch=36000, nb_epoch=100, validation_data=validation_generator,
                         nb_val_samples=100, verbose=2,
                         callbacks=[tensorboard_callback, progbar_callback],
                         nb_worker=1)
