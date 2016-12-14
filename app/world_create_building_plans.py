@@ -1,15 +1,12 @@
-import MalmoPython
-import os
+import json
+import logging
 import sys
 import time
-import random
-import json
-import numpy as np
+
+import MalmoPython
+import xmltodict
 from managers.building_planning import BuidingPlanningManager
 from managers.observation_to_grid import ObservationConverter
-from managers.distance_estimator_image_generator import DistanceEstimatorImageGeneratorManager
-import xmltodict
-import logging
 
 logging.basicConfig(level=logging.INFO)
 

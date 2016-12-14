@@ -1,15 +1,10 @@
 from keras.callbacks import ProgbarLogger
-from keras.models import Sequential
-from keras.layers.core import Flatten, Dense, Dropout
-from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D
-from keras.optimizers import SGD, RMSprop,Adam
-from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import TensorBoard
-import models
+from keras.layers.core import Dense
+from keras.optimizers import SGD, RMSprop, Adam
+from keras.preprocessing.image import ImageDataGenerator
 
-import numpy as np
-
-from models import vggnet
+import models.rlconvnet
 
 if __name__ == "__main__":
     train_datagen = ImageDataGenerator(
@@ -21,14 +16,14 @@ if __name__ == "__main__":
     train_generator = train_datagen.flow_from_directory(
         'data/train',
         target_size=(84, 84), classes=['1', '10'],
-        batch_size=128,
+        batch_size=256,
         class_mode='categorical',
     )
 
     validation_generator = test_datagen.flow_from_directory(
         'data/validate',
         target_size=(84, 84), classes=['1', '10'],
-        batch_size=128,
+        batch_size=256,
         class_mode='categorical'
     )
 
@@ -51,7 +46,6 @@ if __name__ == "__main__":
 
     tensorboard_callback = TensorBoard()
     progbar_callback = ProgbarLogger()
-
 
     model.fit_generator(train_generator, samples_per_epoch=3000, nb_epoch=100, validation_data=validation_generator,
                         nb_val_samples=100, verbose=2,
