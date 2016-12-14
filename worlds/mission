@@ -34,8 +34,8 @@
             </VideoProducer>
             <ObservationFromGrid>
                 <Grid name="agent_surround">
-                    <min x="-100" y="0" z="-100"/>
-                    <max x="100" y="0" z="100"/>
+                    <min x="-150" y="0" z="-150"/>
+                    <max x="150" y="0" z="150"/>
                 </Grid>
             </ObservationFromGrid>
         </AgentHandlers>

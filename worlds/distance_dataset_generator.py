@@ -63,21 +63,6 @@ while not world_state.has_mission_begun:
 print
 print "Mission running ",
 
-
-def create_building_plans(observations, mission_info):
-    grid = observations['agent_surround']
-
-    grid_info = mission_info['Mission']['AgentSection']['AgentHandlers']['ObservationFromGrid']['Grid']
-    agent_placement_info = mission_info['Mission']['AgentSection']['AgentStart']['Placement']
-
-    observation_converter = ObservationConverter()
-    map_2d = observation_converter.convert_observation_to_2d_map(grid, grid_info)
-    center_x, center_y = observation_converter.calculate_map_origins(grid_info, agent_placement_info)
-
-    building_planning_manager = BuidingPlanningManager()
-    building_planning_manager.create_and_save_plans(map_2d, center_x, center_y)
-
-
 distance_image_generator = DistanceEstimatorImageGeneratorManager()
 
 coordinates = distance_image_generator.generate_coordinates()
@@ -126,8 +111,3 @@ while world_state.is_mission_running:
 
 print
 print "Mission ended"
-
-
-# TODO create agent hosts
-
-# TODO create mission

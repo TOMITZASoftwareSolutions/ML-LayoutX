@@ -12,8 +12,8 @@ class DistanceEstimatorImageGeneratorManager():
         generating images only on vertical for now (z)
     '''
 
-    def generate_coordinates(self, training_buildings=['buildings/building-1', 'buildings/building-2'],
-                             validation_buildings=['buildings/building-3']):
+    def generate_coordinates(self, training_buildings=['buildings/building-1', 'buildings/building-2','buildings/building-3'],
+                             validation_buildings=['buildings/building-4']):
         all_coordinates = []
 
         for building in training_buildings:
@@ -68,8 +68,8 @@ class DistanceEstimatorImageGeneratorManager():
 
         delta_xs = [x + random.uniform(-0.4, 0.4) for i in range(3)]
         delta_zs = [z + random.uniform(-0.4, 0.4) for i in range(3)]
-        delta_pitchs = [0 + random.uniform(-5, 5) for i in range(3)]
-        delta_yaws = [yaw + random.uniform(-3, 3) for i in range(3)]
+        delta_pitchs = [0 + random.uniform(-7, 7) for i in range(3)]
+        delta_yaws = [yaw + random.uniform(-5, 5) for i in range(3)]
 
         coordinates = [self.create_coordinate(dx, dz, train, distance, dyaw, building, dpitch) for dx, dz, dpitch, dyaw
                        in itertools.product(delta_xs, delta_zs, delta_pitchs, delta_yaws)]
